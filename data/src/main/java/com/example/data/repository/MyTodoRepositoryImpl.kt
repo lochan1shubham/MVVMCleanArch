@@ -4,7 +4,7 @@ import com.example.data.source.RetrofitApiService
 import com.example.data.model.MyTodoResponse
 
 class MyTodoRepositoryImpl (
-    val apiInterface: RetrofitApiService
+    val retrofitApiService: RetrofitApiService
 ): MyTodoRepository {
-    override suspend fun getTodos(): List<MyTodoResponse> = apiInterface.getData()
+    override suspend fun getTodos(): List<MyTodoResponse> = retrofitApiService.getData()
 }

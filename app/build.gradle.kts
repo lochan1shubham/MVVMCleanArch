@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-//    alias (libs.plugins.hilt.plugin)
+//    alias (libs.plugins.hilt.android)
     alias (libs.plugins.android.ksp)
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
@@ -60,7 +61,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation)
-    implementation(libs.lifecycle.navigation.vm)
+    ksp(libs.hilt.compiler)
+//    implementation(libs.lifecycle.navigation.vm)
 //    implementation(libs.hilt.android.compiler)
     implementation(project(":domain"))
 
