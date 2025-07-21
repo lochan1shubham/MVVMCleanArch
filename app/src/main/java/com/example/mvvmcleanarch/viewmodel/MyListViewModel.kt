@@ -1,14 +1,13 @@
 package com.example.mvvmcleanarch.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.domain.repository.MyRepoDomain
 import com.example.mvvmcleanarch.base.BaseViewModel
 import com.example.mvvmcleanarch.ui.contractforstateandevent.MyListUiEvent
 import com.example.mvvmcleanarch.ui.contractforstateandevent.MyListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +15,14 @@ import javax.inject.Inject
 class MyListViewModel @Inject constructor(
 private val myRepoDomain: MyRepoDomain
 ) : BaseViewModel<MyListUiEvent, MyListViewState>( MyListViewState() ) {
+    val coroutineException = CoroutineExceptionHandler { _, exception ->
+        exception.message?.let { Log.d("Coroutine Exception::", it) }
+        updateViewState { lsState ->
+            lsState.copy(
+                isShowProgress = false
+            )
+        }
+    }
 
     override fun onUIEvent(uiEvent: MyListUiEvent) = null
 
@@ -24,9 +31,17 @@ private val myRepoDomain: MyRepoDomain
     }
 
     private fun loadTodos() {
-//        viewModelScope.launch {
-//            val todos = myRepoDomain.getTodo()
-//        }
+        viewModelScope.launch(coroutineException) {
+            val todos = myRepoDomain.getTodo()
+            if(todos.isNotEmpty()){
+                updateViewState { lsState ->
+                    lsState.copy(
+                        isShowProgress = false,
+                        myTodoModels = todos
+                    )
+                }
+            }
+        }
     }
 
 }

@@ -8,7 +8,7 @@ import com.example.mvvmcleanarch.base.BaseViewState
 @Immutable
 data class MyListViewState (
     val isShowProgress: Boolean = true,
-    val items : List<MyTodoModel>? = null
+    val myTodoModels : List<MyTodoModel>? = null
 ) : BaseViewState
 
 sealed interface MyListUiEvent: BaseUiEvent{

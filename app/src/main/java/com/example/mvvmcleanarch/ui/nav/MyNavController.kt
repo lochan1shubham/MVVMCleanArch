@@ -29,3 +29,6 @@ fun MyNavController() {
     }
 
 }
+// Init navigation Controller Object "rememberNavController()"
+// NavHost (navController, startDestination)) {many composable}
+// navController.navigate (route)
