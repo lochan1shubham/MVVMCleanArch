@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.repository.MyTodoRepository
 import com.example.data.repository.MyTodoRepositoryImpl
 import com.example.data.source.RetrofitApiService
 import com.example.data.source.RetrofitInit
@@ -25,9 +26,9 @@ class NetworkProviderModule {
     }
 
     @Provides
-    fun providesMyTodoRepositoryImpl(
+    fun providesMyTodoRepository(
         retrofitApiService: RetrofitApiService
-    ) = MyTodoRepositoryImpl(
-        retrofitApiService
-    )
+    ) : MyTodoRepository {
+        return MyTodoRepositoryImpl(retrofitApiService)
+    }
 }
